@@ -2,11 +2,28 @@ package com.route.islamigsun.base
 
 import android.app.ProgressDialog
 import android.content.DialogInterface
+import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.route.newsappc34.ui.home.HomeViewModel
 
-open class BaseActivity :AppCompatActivity() {
+abstract class BaseActivity <DB:ViewDataBinding,VM:ViewModel> :AppCompatActivity() {
+
+    lateinit var viewDataBinding: DB
+    lateinit var viewModel: VM
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewDataBinding = DataBindingUtil.setContentView(this,getLayoutId())
+        viewModel= initializeViewModel()
+    }
+    abstract fun getLayoutId():Int
+    abstract fun initializeViewModel():VM
 
     fun makeToast(message:String){
         Toast.makeText(this,"Hello user", Toast.LENGTH_LONG).show()

@@ -17,23 +17,26 @@ import com.route.newsappc34.api.model.ArticlesItem
 import com.route.newsappc34.api.model.NewsResponse
 import com.route.newsappc34.api.model.SourcesItem
 import com.route.newsappc34.api.model.SourcesResponse
+import com.route.newsappc34.databinding.ActivityHomePageBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomePage : BaseActivity(),TabLayout.OnTabSelectedListener {
+class HomePage : BaseActivity<ActivityHomePageBinding,HomeViewModel>(),TabLayout.OnTabSelectedListener {
     //5909ae28122a471d8b0c237d5989cb73
-    lateinit var progressBar: ProgressBar
-    lateinit var tabLayout: TabLayout
-    lateinit var recyclerView: RecyclerView
+
     lateinit var adapter: NewsAdapter
-    lateinit var viewModel: HomeViewModel
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_home_page
+    }
+
+    override fun initializeViewModel(): HomeViewModel {
+        return ViewModelProvider(this).get(HomeViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home_page)
-        // how to declare a view Model
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         setUpViews()
         viewModel.getSources()
         observeToLiveData()
@@ -49,9 +52,9 @@ class HomePage : BaseActivity(),TabLayout.OnTabSelectedListener {
         })
         viewModel.showProgressLiveData.observe(this, Observer {show->
             if(show)
-                progressBar.visibility = View.VISIBLE
+                viewDataBinding.progress.visibility = View.VISIBLE
             else
-                progressBar.visibility = View.GONE
+                viewDataBinding.progress.visibility = View.GONE
 
         })
         viewModel.sourcesLivesData.observe(this, Observer {sourcesList->
@@ -63,24 +66,21 @@ class HomePage : BaseActivity(),TabLayout.OnTabSelectedListener {
     }
 
     private fun setUpViews() {// view
-        progressBar =findViewById(R.id.progress)
-        tabLayout =findViewById(R.id.tabLayout)
-        recyclerView =findViewById(R.id.recycler_view)
-        adapter = NewsAdapter(null)
-        recyclerView.adapter=adapter
+          adapter = NewsAdapter(null)
+         viewDataBinding.recyclerView.adapter=adapter
     }
 
 
     private fun showSourcesInTabLayout(sources: List<SourcesItem?>?) {
 
         sources?.forEach {item->
-            val tab = tabLayout.newTab()
+            val tab = viewDataBinding.tabLayout.newTab()
             tab.setText(item?.name)
             tab.setTag(item)
-            tabLayout.addTab(tab)
+            viewDataBinding.tabLayout.addTab(tab)
         }
-        tabLayout.addOnTabSelectedListener(this)
-        tabLayout.getTabAt(0)?.select()
+        viewDataBinding.tabLayout.addOnTabSelectedListener(this)
+        viewDataBinding.tabLayout.getTabAt(0)?.select()
     }
     override fun onTabReselected(tab: TabLayout.Tab?) {
         val item = tab?.tag as SourcesItem
