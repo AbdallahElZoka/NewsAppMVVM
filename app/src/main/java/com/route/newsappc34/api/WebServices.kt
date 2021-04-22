@@ -9,9 +9,10 @@ import retrofit2.http.Query
 interface WebServices {
 
     @GET("sources")
-    fun getNewsSources(@Query("apiKey") key:String,
+    suspend fun getNewsSources(@Query("apiKey") key:String,
                        @Query("language")lang:String,
-                       @Query("country")country:String):Call<SourcesResponse>
+                       @Query("country")country:String):SourcesResponse
+    // concurrency
     @GET("everything")
     fun getNews(@Query("apiKey") key:String,
                        @Query("language")lang:String,

@@ -3,25 +3,19 @@ package com.route.newsappc34.ui.home
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.route.islamigsun.base.BaseActivity
-import com.route.newsappc34.Constants
 import com.route.newsappc34.NewsAdapter
 import com.route.newsappc34.R
-import com.route.newsappc34.api.ApiManager
 import com.route.newsappc34.api.model.ArticlesItem
-import com.route.newsappc34.api.model.NewsResponse
 import com.route.newsappc34.api.model.SourcesItem
-import com.route.newsappc34.api.model.SourcesResponse
 import com.route.newsappc34.databinding.ActivityHomePageBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomePage : BaseActivity<ActivityHomePageBinding,HomeViewModel>(),TabLayout.OnTabSelectedListener {
     //5909ae28122a471d8b0c237d5989cb73
 
@@ -31,8 +25,10 @@ class HomePage : BaseActivity<ActivityHomePageBinding,HomeViewModel>(),TabLayout
         return R.layout.activity_home_page
     }
 
+    private val homeViewModel: HomeViewModel by viewModels()
+
     override fun initializeViewModel(): HomeViewModel {
-        return ViewModelProvider(this).get(HomeViewModel::class.java)
+        return homeViewModel;
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
