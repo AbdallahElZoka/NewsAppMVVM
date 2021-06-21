@@ -9,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.route.newsappc34.ui.home.HomeViewModel
 
 abstract class BaseActivity <DB:ViewDataBinding,VM:ViewModel> :AppCompatActivity() {
 

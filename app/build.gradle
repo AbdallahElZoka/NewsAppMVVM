@@ -11,7 +11,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.route.newsappc34"
+        applicationId "com.route.abdallah.newsapprepo"
         minSdkVersion 18
         targetSdkVersion 30
         versionCode 1

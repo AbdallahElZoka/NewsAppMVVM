@@ -1,0 +1,25 @@
+package com.route.newsapp
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import com.route.newsapp.ui.home.HomePage
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        Handler(Looper.getMainLooper())
+                .postDelayed({
+                    gotoHomeActivity()
+                },2000)
+    }
+
+    private fun gotoHomeActivity() {
+        val intent = Intent(this, HomePage::class.java)
+        startActivity(intent)
+        finish()
+    }
+}
